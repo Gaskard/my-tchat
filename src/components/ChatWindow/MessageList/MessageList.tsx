@@ -11,12 +11,10 @@ interface IProps {
 const MessageList = ({messages}: IProps) => {
 
   return (
-    <div className="container">
+    <div className="messages">
       {messages.map((message: IMessageData, index) => (
-        <div key={index}>
-          <div className="message">
+        <div className='messages__item' key={index}>
             {message.message}
-          </div>
         </div>
       ))}
     </div>
