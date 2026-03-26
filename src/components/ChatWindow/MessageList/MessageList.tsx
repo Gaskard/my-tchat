@@ -1,3 +1,5 @@
+import './messageList.scss'
+
 export interface IMessageData {
   id: number;
   message: string;
@@ -13,7 +15,7 @@ const MessageList = ({messages}: IProps) => {
   return (
     <div className="messages">
       {messages.map((message: IMessageData, index) => (
-        <div className='messages__item' key={index}>
+        <div className={message.sender === 'Dmytro' ? 'messages__item messages__item--mine' : 'messages__item messages__item--other'} key={index}>
             {message.message}
         </div>
       ))}

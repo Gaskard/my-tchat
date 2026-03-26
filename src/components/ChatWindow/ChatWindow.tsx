@@ -15,8 +15,8 @@ const ChatWindow = () => {
       const fetchMessages = async () => {
       try {
         const {data, error} = await supabase
-        .from('messages')
-        .select('*')
+          .from('messages')
+          .select('*')
 
         if (error) {
           console.log('error', error);
@@ -29,11 +29,31 @@ const ChatWindow = () => {
       }
       }
       void fetchMessages();
+
+      const subscribe = supabase
+        .channel('messages_chanel')
+        .on(
+          'postgres_changes',
+          {event: 'INSERT', schema: 'public', table: 'messages'},
+          (payload) => {
+            console.log('message: ', payload.new);
+            setMessages((prev) => {
+              const isDuplicate = prev.find(m => m.id === (payload.new.id));
+              if (isDuplicate) return prev;
+              return [...prev, payload.new as IMessageData]
+            })
+          }
+        )
+        .subscribe();
+      return () => {
+        void supabase.removeChannel(subscribe);
+      };
+
   }, [])
 
   const addMessage = async (text: string) => {
     try {
-      const {data, error} = await supabase
+      const {error} = await supabase
         .from('messages')
         .insert([
           {message: text, sender: 'Dmytro'}
@@ -41,8 +61,6 @@ const ChatWindow = () => {
         .select();
       if (error) {
         console.log('error', error);
-      } else if (data) {
-        setMessages([...messages, data[0]]);
       }
     } catch (err) {
       console.error(err);
