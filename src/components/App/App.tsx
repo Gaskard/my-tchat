@@ -4,10 +4,11 @@ import '../../styles/base.scss'
 
 import ChatWindow from '../ChatWindow/ChatWindow.tsx';
 import Auth from '../../features/Auth/Auth.tsx';
+import {useAuth} from '../../AuthContext/AuthContext.tsx';
 
 function App() {
 
-  const isAuth = false;
+  const {isAuth} = useAuth()
 
   return (
     <>

@@ -2,7 +2,7 @@ import {createContext, useContext, useState} from 'react';
 
 interface IAuthContext {
   isAuth: boolean;
-  authUpd: (value: boolean) => void;
+  setIsAuth: (value: boolean) => void;
 }
 
 interface IWrapperProps {
@@ -12,7 +12,7 @@ interface IWrapperProps {
 // eslint-disable-next-line react-refresh/only-export-components
 export const AuthContext = createContext<IAuthContext>({
   isAuth: false,
-  authUpd: () => {},
+  setIsAuth: () => {},
 })
 
 const AuthContextProvider = ({ children }: IWrapperProps) => {
@@ -21,11 +21,12 @@ const AuthContextProvider = ({ children }: IWrapperProps) => {
   return (
     <AuthContext.Provider value={{
       isAuth: isAuth,
-      authUpd: setIsAuth
+      setIsAuth: setIsAuth
     }}>
       {children}
     </AuthContext.Provider>
   )
 }
+// eslint-disable-next-line react-refresh/only-export-components
 export const useAuth = () => useContext(AuthContext)
 export default AuthContextProvider
