@@ -1,5 +1,8 @@
 import './messageList.scss'
 
+import {useEffect, useRef} from 'react';
+import MessageItem from './MessageItem/MessageItem.tsx';
+
 export interface IMessageData {
   id: number;
   message: string;
@@ -12,13 +15,18 @@ interface IProps {
 
 const MessageList = ({messages}: IProps) => {
 
+  const lastMessage = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    lastMessage.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages])
+
   return (
     <div className="messages">
-      {messages.map((message: IMessageData, index) => (
-        <div className={message.sender === 'Dmytro' ? 'messages__item messages__item--mine' : 'messages__item messages__item--other'} key={index}>
-            {message.message}
-        </div>
+      {messages.map((messageData: IMessageData) => (
+        <MessageItem key={messageData.id} messageData={messageData}/>
       ))}
+      <div ref={lastMessage} className="message__last"></div>
     </div>
   )
 }
