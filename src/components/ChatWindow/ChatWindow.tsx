@@ -1,6 +1,7 @@
 import {useEffect, useState} from 'react';
 import MessageList from './MessageList/MessageList.tsx';
 import MessageInput from './MessageInput/MessageInput.tsx';
+import Sidebar from '../Sidebar/Sidebar.tsx';
 
 import type {IMessageData} from './MessageList/MessageList.tsx';
 
@@ -73,6 +74,7 @@ const ChatWindow = () => {
     <>
       <MessageList messages={messages}/>
       <MessageInput onSendMessage={addMessage}/>
+      <Sidebar/>
     </>
   )
 }
