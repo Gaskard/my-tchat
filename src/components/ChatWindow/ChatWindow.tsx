@@ -54,10 +54,17 @@ const ChatWindow = () => {
 
   const addMessage = async (text: string) => {
     try {
+      const {data: userData, error: userError} = await supabase
+        .auth
+        .getUser()
+      if (userError || !userData) {
+        alert(`Error: ${userError?.message}`);
+        return
+      }
       const {error} = await supabase
         .from('messages')
         .insert([
-          {message: text, sender: 'Dmytro'}
+          {message: text, sender: userData.user?.email}
         ])
         .select();
       if (error) {
