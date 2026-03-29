@@ -5,6 +5,7 @@ import MessageItem from './MessageItem/MessageItem.tsx';
 
 export interface IMessageData {
   id: number;
+  created_at: string;
   message: string;
   sender: string;
 }

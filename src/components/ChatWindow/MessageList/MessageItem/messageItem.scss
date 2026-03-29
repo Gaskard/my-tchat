@@ -1,8 +1,22 @@
 .messages {
+  display: flex;
+  padding: 0 10px;
+  &__item {
+    display: flex;
+    flex-direction: column;
+    line-height: 130%;
+  }
   &__sender {
     display: flex;
     justify-content: space-between;
-    gap: 10px;
-    color: red;
+    color: #8ba8f1;
+    font-size: 12px;
+  }
+  &__time {
+    display: flex;
+    flex-direction: column;
+    color: #8ba8f1;
+    font-size: 12px;
+    align-items: flex-end;
   }
 }
