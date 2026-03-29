@@ -1,0 +1,8 @@
+.messages {
+  &__sender {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    color: red;
+  }
+}
