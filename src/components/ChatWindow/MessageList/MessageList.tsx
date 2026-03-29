@@ -11,9 +11,10 @@ export interface IMessageData {
 
 interface IProps {
   messages: IMessageData[];
+  currentUser?: string
 }
 
-const MessageList = ({messages}: IProps) => {
+const MessageList = ({messages, currentUser}: IProps) => {
 
   const lastMessage = useRef<HTMLDivElement>(null);
 
@@ -24,7 +25,7 @@ const MessageList = ({messages}: IProps) => {
   return (
     <div className="messages">
       {messages.map((messageData: IMessageData) => (
-        <MessageItem key={messageData.id} messageData={messageData}/>
+        <MessageItem key={messageData.id} messageData={messageData} currentUser={currentUser}/>
       ))}
       <div ref={lastMessage} className="message__last"></div>
     </div>

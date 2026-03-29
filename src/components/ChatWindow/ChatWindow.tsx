@@ -12,6 +12,8 @@ const ChatWindow = () => {
 
   const [messages, setMessages] = useState<IMessageData[]>([]);
 
+  const [currentUser, setCurrentUser] = useState<string | undefined>('');
+
   useEffect(() => {
       const fetchMessages = async () => {
       try {
@@ -31,6 +33,24 @@ const ChatWindow = () => {
       }
       }
       void fetchMessages();
+
+      const fetchUser = async () => {
+        try {
+          const {data, error} = await supabase
+          .auth
+          .getUser()
+          if (error) {
+            alert('error');
+          } else {
+            setCurrentUser(data.user?.email)
+          }
+        }
+        catch {
+          alert('error');
+        }
+      }
+
+      void fetchUser()
 
       const subscribe = supabase
         .channel('messages_chanel')
@@ -80,7 +100,7 @@ const ChatWindow = () => {
 
   return (
     <>
-      <MessageList messages={messages}/>
+      <MessageList messages={messages} currentUser={currentUser}/>
       <MessageInput onSendMessage={addMessage}/>
       <Sidebar/>
     </>
