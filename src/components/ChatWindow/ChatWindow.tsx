@@ -18,6 +18,7 @@ const ChatWindow = () => {
         const {data, error} = await supabase
           .from('messages')
           .select('*')
+          .order('created_at', {ascending: true})
 
         if (error) {
           console.log('error', error);
