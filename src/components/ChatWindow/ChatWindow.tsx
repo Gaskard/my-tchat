@@ -19,7 +19,7 @@ const ChatWindow = () => {
       try {
         const {data, error} = await supabase
           .from('messages')
-          .select('*')
+          .select('*, profiles(nickname)')
           .order('created_at', {ascending: true})
 
         if (error) {
@@ -42,7 +42,7 @@ const ChatWindow = () => {
           if (error) {
             alert('error');
           } else {
-            setCurrentUser(data.user?.email)
+            setCurrentUser(data.user?.id)
           }
         }
         catch {
@@ -85,7 +85,7 @@ const ChatWindow = () => {
       const {error} = await supabase
         .from('messages')
         .insert([
-          {message: text, sender: userData.user?.email}
+          {message: text, sender: userData.user?.id}
         ])
         .select();
       if (error) {

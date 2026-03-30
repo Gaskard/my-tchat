@@ -8,6 +8,9 @@ export interface IMessageData {
   created_at: string;
   message: string;
   sender: string;
+  profiles: {
+    nickname: string;
+  }
 }
 
 interface IProps {
