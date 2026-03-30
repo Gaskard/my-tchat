@@ -57,12 +57,22 @@ const ChatWindow = () => {
         .on(
           'postgres_changes',
           {event: 'INSERT', schema: 'public', table: 'messages'},
-          (payload) => {
-            console.log('message: ', payload.new);
+          async (payload) => {
+            const {data} = await supabase
+              .from('profiles')
+              .select('nickname')
+              .eq('id', payload.new.sender)
+              .single()
+
+            const assembledMessage = {
+              ...payload.new,
+              profiles: data
+            }
+
             setMessages((prev) => {
               const isDuplicate = prev.find(m => m.id === (payload.new.id));
               if (isDuplicate) return prev;
-              return [...prev, payload.new as IMessageData]
+              return [...prev, assembledMessage as IMessageData]
             })
           }
         )
