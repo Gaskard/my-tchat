@@ -20,12 +20,12 @@ const ChatWindow = () => {
         const {data, error} = await supabase
           .from('messages')
           .select('*, profiles(nickname)')
-          .order('created_at', {ascending: true})
+          .order('created_at', {ascending: false}).limit(50)
 
         if (error) {
           console.log('error', error);
         } else if (data) {
-          setMessages(data);
+          setMessages(data.reverse());
         }
       }
       catch (err) {
